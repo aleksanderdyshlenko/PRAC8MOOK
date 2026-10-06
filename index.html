@@ -3,86 +3,183 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Регистрация — HTML-форма с валидацией</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Регистрация</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    form {
+      width: 100%;
+      max-width: 440px;
+      padding: 35px 40px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 6px;
+      font-size: 26px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #999;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-size: 14px;
+      color: #555;
+      font-weight: 600;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: inherit;
+      background: #fafafa;
+      transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #667eea;
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+    }
+
+    input:valid:not(:placeholder-shown),
+    textarea:valid:not(:placeholder-shown),
+    select:valid {
+      border-color: #27ae60;
+    }
+
+    input:invalid:not(:placeholder-shown),
+    textarea:invalid:not(:placeholder-shown) {
+      border-color: #e74c3c;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .hint {
+      display: block;
+      font-size: 12px;
+      color: #999;
+      margin-top: 4px;
+    }
+
+    .counter {
+      display: block;
+      text-align: right;
+      font-size: 12px;
+      color: #999;
+      margin-top: 4px;
+    }
+  </style>
 </head>
 <body>
-  <div class="wrapper">
-    <form id="registerForm" action="/submit" method="post" novalidate>
-      <h2>📝 Регистрация</h2>
-      <p class="subtitle">Заполните все поля корректно</p>
+  <form action="/submit" method="post">
+    <h2>📝 Регистрация</h2>
+    <p class="subtitle">Заполните все поля корректно</p>
 
-      <!-- Имя -->
-      <div class="field">
-        <label for="name">Имя</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Введите имя"
-          required
-          minlength="2"
-          maxlength="30">
-        <small class="error" id="error-name"></small>
-      </div>
+    <label for="name">Имя</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      placeholder="Введите имя"
+      required
+      minlength="2"
+      maxlength="30">
 
-      <!-- Email -->
-      <div class="field">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="example@mail.com"
-          required>
-        <small class="error" id="error-email"></small>
-      </div>
+    <label for="email">Email</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      placeholder="example@mail.com"
+      required>
 
-      <!-- Пароль -->
-      <div class="field">
-        <label for="password">Пароль</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Минимум 6 символов"
-          required
-          minlength="6">
-        <small class="error" id="error-password"></small>
-      </div>
+    <label for="password">Пароль</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      placeholder="Минимум 6 символов"
+      required
+      minlength="6">
+    <span class="hint">Пароль должен содержать не менее 6 символов</span>
 
-      <!-- Город -->
-      <div class="field">
-        <label for="city">Город</label>
-        <select id="city" name="city" required>
-          <option value="">— Выберите город —</option>
-          <option value="almaty">Алматы</option>
-          <option value="astana">Астана</option>
-          <option value="shymkent">Шымкент</option>
-          <option value="karaganda">Караганда</option>
-        </select>
-        <small class="error" id="error-city"></small>
-      </div>
+    <label for="city">Город</label>
+    <select id="city" name="city" required>
+      <option value="">— Выберите город —</option>
+      <option value="almaty">Алматы</option>
+      <option value="astana">Астана</option>
+      <option value="shymkent">Шымкент</option>
+      <option value="karaganda">Караганда</option>
+    </select>
 
-      <!-- Комментарий -->
-      <div class="field">
-        <label for="comment">Комментарий</label>
-        <textarea
-          id="comment"
-          name="comment"
-          placeholder="Ваш комментарий..."
-          maxlength="200"></textarea>
-        <small class="counter" id="counter">0 / 200</small>
-      </div>
+    <label for="comment">Комментарий</label>
+    <textarea
+      id="comment"
+      name="comment"
+      placeholder="Ваш комментарий..."
+      maxlength="200"></textarea>
+    <span class="counter">0 / 200</span>
 
-      <button type="submit">Отправить</button>
-
-      <div class="success" id="successMessage">
-        ✅ Форма успешно отправлена!
-      </div>
-    </form>
-  </div>
-
-  <script src="script.js"></script>
+    <button type="submit">Отправить</button>
+  </form>
 </body>
 </html>
